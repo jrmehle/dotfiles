@@ -1,0 +1,64 @@
+[core]
+    pager = "/usr/bin/less -RciqMSj5"
+	excludesfile = /Users/jared/.gitignore_global
+    editor = subl -w
+#	excludesfile = /Users/jared/.gitignore
+
+[color]
+    diff = auto
+    branch = auto
+    status = auto
+
+[diff]
+    renames = true
+
+[alias]
+    st = status
+    d = diff
+    ci = commit -v
+    cia = commit -v -a
+    co = checkout
+    cp = cherry-pick
+    l = log
+    ll = log -p
+    lt = log trunk..
+    llt = log -p trunk..
+    lm = log main..
+    llm = log -p main..
+    br = branch
+	sourcetree = !open -a SourceTree .
+    fch = fetch
+    changelog = log -n25 --no-merges --date=short --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' -- lib
+	create-pull-request = !sh -c 'stash pull-request $0'
+	oldest-ancestor = !bash -c 'diff -u <(git rev-list --first-parent \"${1:-main}\") <(git rev-list --first-parent \"${2:-HEAD}\") | sed -ne \"s/^ //p\" | head -1' -
+    mdpr = !sh -c 'git checkout $0 && git checkout - && git merge --no-ff $0'
+    rebase-and-fetch = !sh -c 'git pull --rebase && git fetch --prune'
+    clean-up = !git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d
+[pivotal]
+	api-token = REDACTED
+	full-name = Jared Mehle
+[user]
+	name = Jared Mehle
+	email = jared@softwareforgood.com
+[github]
+	user = jrmehle
+	token = REDACTED
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = current
+[heroku]
+	account = work
+[commit]
+	template = /Users/jared/.stCommitMsg
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

@@ -1,0 +1,8 @@
+# git/.gitconfig
+[user]
+  name  = Jared Mehle
+  email = jrmehle@gmail.com
+
+[include]
+  # Machine-local overrides (not tracked in git)
+  path = ~/.gitconfig.local

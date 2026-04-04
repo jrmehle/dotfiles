@@ -3,6 +3,11 @@
   name  = Jared Mehle
   email = jrmehle@gmail.com
 
+[alias]
+    st = status
+    co = checkout
+    br = branch
+
 [include]
   # Machine-local overrides (not tracked in git)
   path = ~/.gitconfig.local

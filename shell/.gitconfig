@@ -1,12 +1,53 @@
 # git/.gitconfig
+[core]
+  editor = subl -w
+
 [user]
   name  = Jared Mehle
   email = jrmehle@gmail.com
 
+[color]
+  diff = auto
+  branch = auto
+  status = auto
+
+[diff]
+  renames = true
+
 [alias]
-    st = status
-    co = checkout
-    br = branch
+  st = status
+  d = diff
+  ci = commit -v
+  cia = commit -v -a
+  co = checkout
+  cp = cherry-pick
+  l = log
+  ll = log -p
+  lt = log trunk..
+  llt = log -p trunk..
+  lm = log main..
+  llm = log -p main..
+  br = branch
+  sourcetree = !open -a SourceTree .
+  fch = fetch
+  changelog = log -n25 --no-merges --date=short --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' -- lib
+  create-pull-request = !sh -c 'stash pull-request $0'
+  oldest-ancestor = !bash -c 'diff -u <(git rev-list --first-parent \"${1:-main}\") <(git rev-list --first-parent \"${2:-HEAD}\") | sed -ne \"s/^ //p\" | head -1' -
+  mdpr = !sh -c 'git checkout $0 && git checkout - && git merge --no-ff $0'
+  rebase-and-fetch = !sh -c 'git pull --rebase && git fetch --prune'
+  clean-up = !git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d
+
+[push]
+  default = current
+
+[init]
+  defaultBranch = main
+
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
 
 [include]
   # Machine-local overrides (not tracked in git)

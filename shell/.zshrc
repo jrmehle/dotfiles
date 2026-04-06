@@ -1,3 +1,10 @@
+# Detect OS first, at the very top
+case "$(uname -s)" in
+  Darwin) export IS_MAC=true ;;
+  Linux)  export IS_LINUX=true ;;
+esac
+
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -103,18 +110,59 @@ source $ZSH/oh-my-zsh.sh
 # rbenv
 # eval "$(rbenv init - zsh)"
 
-# install older ruby version on M1
-# https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
-# export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-# Oct 2024 updated to openssl 3 as 1.1 has become deprecated
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
-# export LDFLAGS="-L/opt/homebrew/opt/readline/lib:$LDFLAGS"
-# export CPPFLAGS="-I/opt/homebrew/opt/readline/include:$CPPFLAGS"
-# export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig:$PKG_CONFIG_PATH"
-export optflags="-Wno-error=implicit-function-declaration"
-# export LDFLAGS="-L/opt/homebrew/opt/libffi/lib:$LDFLAGS"
-# export CPPFLAGS="-I/opt/homebrew/opt/libffi/include:$CPPFLAGS"
-# export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+
+# --- Homebrew ---
+# Only run on Mac, silently skipped on Linux
+if [[ "$IS_MAC" == true ]]; then
+  # Apple Silicon path (adjust if you're on Intel: /usr/local)
+  export PATH="/opt/homebrew/bin:$PATH"
+  eval "$(brew shellenv)"
+
+  # install older ruby version on M1
+  # https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
+  # export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+  # Oct 2024 updated to openssl 3 as 1.1 has become deprecated
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+  # export LDFLAGS="-L/opt/homebrew/opt/readline/lib:$LDFLAGS"
+  # export CPPFLAGS="-I/opt/homebrew/opt/readline/include:$CPPFLAGS"
+  # export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig:$PKG_CONFIG_PATH"
+  export optflags="-Wno-error=implicit-function-declaration"
+  # export LDFLAGS="-L/opt/homebrew/opt/libffi/lib:$LDFLAGS"
+  # export CPPFLAGS="-I/opt/homebrew/opt/libffi/include:$CPPFLAGS"
+  # export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+  # subl command
+  export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+
+  # python/pip 3 doesn't default
+  alias python=/opt/homebrew/bin/python3
+  alias pip=/opt/homebrew/bin/pip3
+
+  # sourcetree CLI
+  alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
+
+  alias fix_camera="sudo killall VDCAssistant"
+  alias prepareubmprod='az aks get-credentials --resource-group created-by-SfG --name aks-prod --overwrite-existing && kubelogin convert-kubeconfig -l azurecli'
+  alias ubmprodconsole="prepareubmprod && kubectl exec -it deploy/ubm-web -- bash -c 'RAILS_ENV=production RAILS_MASTER_KEY=$(</mnt/secrets/RAILS-MASTER-KEY) rails console'"
+
+
+  # Commit Change
+  alias cc-run='bin/cc-run'
+  alias ccr='bin/cc-run'
+
+  # EdFuel
+  alias ef-run='/Users/jared/Documents/code/edfuel-talenthub/run'
+  alias efrun='/Users/jared/Documents/code/edfuel-talenthub/run'
+
+  # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+  fpath=(/Users/jared/.docker/completions $fpath)
+  autoload -Uz compinit
+  compinit
+  # End of Docker CLI completions
+  export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+fi
+
 
 # Enable yjit for all uses of Ruby
 export RUBYOPT="--yjit"
@@ -127,12 +175,7 @@ export MALLOC_CONF="dirty_decay_ms:1000,narenas:2,background_thread:true"
 # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # subl command
-export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 export EDITOR='subl -w'
-
-# python/pip 3 doesn't default
-alias python=/opt/homebrew/bin/python3
-alias pip=/opt/homebrew/bin/pip3
 
 # custom aliases
 alias flushdns='dscacheutil -flushcache'
@@ -141,28 +184,11 @@ alias bup='bundle update'
 alias bx='bundle exec'
 alias bexec_u_rails='bundle exec unicorn_rails'
 alias dc='docker-compose'
-alias fix_camera="sudo killall VDCAssistant"
-# alias reconnect_wifi="cd ~/Documents/code/reconnect_wifi && ruby reconnect_wifi.rb"
-alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
-#alias gitrebaseandfetch='git pull --rebase && git fetch --prune'
-alias prepareubmprod='az aks get-credentials --resource-group created-by-SfG --name aks-prod --overwrite-existing && kubelogin convert-kubeconfig -l azurecli'
-alias ubmprodconsole="prepareubmprod && kubectl exec -it deploy/ubm-web -- bash -c 'RAILS_ENV=production RAILS_MASTER_KEY=$(</mnt/secrets/RAILS-MASTER-KEY) rails console'"
 
-# Commit Change
-alias cc-run='bin/cc-run'
-alias ccr='bin/cc-run'
-
-# EdFuel
-alias ef-run='/Users/jared/Documents/code/edfuel-talenthub/run'
-alias efrun='/Users/jared/Documents/code/edfuel-talenthub/run'
 
 # Rails configuration
 # disable spring for older applications
 export DISABLE_SPRING=true
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/jared/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+# activate mise
 eval "$(mise activate zsh)"

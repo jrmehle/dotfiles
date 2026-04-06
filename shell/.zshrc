@@ -40,6 +40,10 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
+# Fix Kitty keyboard protocol in Ghostty
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+  DISABLE_MAGIC_FUNCTIONS=true
+fi
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -109,8 +113,6 @@ source $ZSH/oh-my-zsh.sh
 
 # rbenv
 # eval "$(rbenv init - zsh)"
-
-
 
 # --- Homebrew ---
 # Only run on Mac, silently skipped on Linux

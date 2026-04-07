@@ -145,9 +145,6 @@ if [[ "$IS_MAC" == true ]]; then
   alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 
   alias fix_camera="sudo killall VDCAssistant"
-  alias prepareubmprod='az aks get-credentials --resource-group created-by-SfG --name aks-prod --overwrite-existing && kubelogin convert-kubeconfig -l azurecli'
-  alias ubmprodconsole="prepareubmprod && kubectl exec -it deploy/ubm-web -- bash -c 'RAILS_ENV=production RAILS_MASTER_KEY=$(</mnt/secrets/RAILS-MASTER-KEY) rails console'"
-
 
   # Commit Change
   alias cc-run='bin/cc-run'

@@ -56,14 +56,28 @@ clipboard-write = allow
 copy-on-select = clipboard
 background-blur-radius = 40
 background-opacity = 0.82
-macos-titlebar-proxy-icon = hidden
-macos-titlebar-style = tabs
 window-save-state = always
 window-padding-x = 10
 window-padding-y = 20
+window-padding-balance = true
 window-decoration = true
+window-padding-color = background
 window-inherit-font-size = true
+scrollbar = system
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# prevent title query attacks
+title-report = false
+
+# programming ligatures
+font-feature = +liga # transforms => != etc into single glyphs
+font-feature = +calt # contextual alternatives
+
 theme = Idle Toes
 font-family = Fira Mono Medium
 auto-update = check
 auto-update-channel = stable
+macos-titlebar-proxy-icon = hidden
+macos-titlebar-style = tabs
+gtk-single-instance = desktop

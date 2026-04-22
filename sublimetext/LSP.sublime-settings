@@ -1,0 +1,11 @@
+// Settings in here override those in "LSP/LSP.sublime-settings"
+{
+  "nodejs_runtime": "/Users/jared/.nvm/versions/node/v22.21.1/bin/node",
+  "clients": {
+    "stimulus": {
+      "enabled": false,
+      "command": ["stimulus-language-server", "--stdio"],
+      "selector": "text.html.rails"
+    }
+  },
+}

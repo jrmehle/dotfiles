@@ -1,0 +1,73 @@
+{
+	"bold_folder_labels": false,
+	"color_scheme": "Packages/User/Themes/idleFingers.tmTheme",
+	"draw_white_space": "selection",
+	"ensure_newline_at_eof_on_save": true,
+	"file_exclude_patterns":
+	[
+		"*.pyc",
+		"*.pyo",
+		"*.exe",
+		"*.dll",
+		"*.obj",
+		"*.o",
+		"*.a",
+		"*.lib",
+		"*.so",
+		"*.dylib",
+		"*.ncb",
+		"*.sdf",
+		"*.suo",
+		"*.pdb",
+		"*.idb",
+		".DS_Store",
+		"*.class",
+		"*.psd",
+		"*.db",
+		"*.pdf"
+	],
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		".venv",
+		"CVS",
+		".bundle",
+		"log",
+		"tmp",
+		".sass-cache",
+		"coverage",
+		"node_modules"
+	],
+	"font_face": "Fira Mono Medium",
+	"font_options":
+	[
+		"subpixel_antialias"
+	],
+	"font_size": 15,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"SideBarEnhancements",
+		"Vintage",
+	],
+	"margin": 0,
+	"new_window_settings":
+	{
+		"show_minimap": false,
+	},
+	"save_on_focus_lost": true,
+	"show_git_status": true,
+	"sidebar_size_13": true,
+	"soda_classic_tabs": true,
+	"tab_completion": true,
+	"tab_size": 2,
+	"tabs_small": true,
+	"theme": "Afterglow-blue.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": false,
+	"index_files": false,
+}

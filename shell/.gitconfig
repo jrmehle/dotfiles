@@ -35,7 +35,15 @@
   oldest-ancestor = !bash -c 'diff -u <(git rev-list --first-parent \"${1:-main}\") <(git rev-list --first-parent \"${2:-HEAD}\") | sed -ne \"s/^ //p\" | head -1' -
   mdpr = !sh -c 'git checkout $0 && git checkout - && git merge --no-ff $0'
   rebase-and-fetch = !sh -c 'git pull --rebase && git fetch --prune'
-  clean-up = !git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d
+  clean-up-branches = !git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d
+  prune-gone = "!git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs -r git branch -D"
+  # https://piechowski.io/post/git-commands-before-reading-code/
+  what-changes-most = !git log --format=format: --name-only --since="1 year ago" | sort | uniq -c | sort -nr | head -20
+  who-built-this = shortlog -sn --no-merges
+  where-do-bugs-cluster = !git log -i -E --grep="fix|bug|broken" --name-only --format='' | sort | uniq -c | sort -nr | head -20
+  is-this-project-accelerating-or-dying = !git log --format='%ad' --date=format:'%Y-%m' | sort | uniq -c
+  how-often-is-this-team-firefighting = !git log --oneline --since="1 year ago" | grep -iE 'revert|hotfix|emergency|rollback'
+  # end piechowski
 
 [push]
   default = current

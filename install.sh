@@ -27,7 +27,7 @@ link() {
 link "$DOTFILES/shell/.zshrc"            "$HOME/.zshrc"
 
 # Git
-link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
+link "$DOTFILES/shell/.gitconfig"          "$HOME/.gitconfig"
 
 # Mise
 link "$DOTFILES/mise/config.toml"        "$HOME/.config/mise/config.toml"

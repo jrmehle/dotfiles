@@ -2,10 +2,6 @@
 [core]
   editor = subl -w
 
-[user]
-  name  = Jared Mehle
-  email = jrmehle@gmail.com
-
 [color]
   diff = auto
   branch = auto

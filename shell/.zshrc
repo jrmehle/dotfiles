@@ -93,11 +93,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='subl -w'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -111,12 +111,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# rbenv
-# eval "$(rbenv init - zsh)"
-
-# --- Homebrew ---
-# Only run on Mac, silently skipped on Linux
 if [[ "$IS_MAC" == true ]]; then
+  # --- Homebrew ---
+  # Only run on Mac, silently skipped on Linux
   # Apple Silicon path (adjust if you're on Intel: /usr/local)
   export PATH="/opt/homebrew/bin:$PATH"
   eval "$(brew shellenv)"
@@ -160,6 +157,9 @@ if [[ "$IS_MAC" == true ]]; then
   compinit
   # End of Docker CLI completions
   export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+  # custom aliases
+  alias flushdns='dscacheutil -flushcache'
 fi
 
 
@@ -168,22 +168,12 @@ export RUBYOPT="--yjit"
 # jemalloc config
 export MALLOC_CONF="dirty_decay_ms:1000,narenas:2,background_thread:true"
 
-# nvm
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" 2>/dev/null  # This loads nvm
-# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# subl command
-export EDITOR='subl -w'
-
 # custom aliases
-alias flushdns='dscacheutil -flushcache'
 alias sclear='clear && clear'
 alias bup='bundle update'
 alias bx='bundle exec'
 alias bexec_u_rails='bundle exec unicorn_rails'
 alias dc='docker-compose'
-
 
 # Rails configuration
 # disable spring for older applications
@@ -191,3 +181,4 @@ export DISABLE_SPRING=true
 
 # activate mise
 eval "$(mise activate zsh)"
+

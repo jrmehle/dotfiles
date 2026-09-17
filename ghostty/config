@@ -74,8 +74,8 @@ title-report = false
 font-feature = +liga # transforms => != etc into single glyphs
 font-feature = +calt # contextual alternatives
 
-theme = Idle Toes
-font-family = Fira Mono Medium
+theme = IdleFingers
+font-family = Fira Code Medium
 auto-update = check
 auto-update-channel = stable
 macos-titlebar-proxy-icon = hidden

@@ -112,17 +112,24 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 if [[ "$IS_MAC" == true ]]; then
-  # --- Homebrew ---
-  # Only run on Mac, silently skipped on Linux
-  # Apple Silicon path (adjust if you're on Intel: /usr/local)
-  export PATH="/opt/homebrew/bin:$PATH"
-  eval "$(brew shellenv)"
+  HAS_BREW="$(command -v brew 2>/dev/null)"
+
+  if [[ -n "$HAS_BREW" ]]; then
+    # --- Homebrew ---
+    # Only run on Mac, silently skipped on Linux
+    # Apple Silicon path (adjust if you're on Intel: /usr/local)
+    eval "$(brew shellenv)"
+    export PATH="$(brew --prefix)/bin:$PATH"
+  fi
 
   # install older ruby version on M1
   # https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
   # export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
   # Oct 2024 updated to openssl 3 as 1.1 has become deprecated
-  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+
+  if [[ -n "$HAS_BREW" ]]; then
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+  fi
   # export LDFLAGS="-L/opt/homebrew/opt/readline/lib:$LDFLAGS"
   # export CPPFLAGS="-I/opt/homebrew/opt/readline/include:$CPPFLAGS"
   # export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -134,9 +141,11 @@ if [[ "$IS_MAC" == true ]]; then
   # subl command
   export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
-  # python/pip 3 doesn't default
-  alias python=/opt/homebrew/bin/python3
-  alias pip=/opt/homebrew/bin/pip3
+  if [[ -n "$HAS_BREW" ]]; then
+    # python/pip 3 doesn't default
+    alias python=/opt/homebrew/bin/python3
+    alias pip=/opt/homebrew/bin/pip3
+  fi
 
   # sourcetree CLI
   alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
@@ -156,7 +165,10 @@ if [[ "$IS_MAC" == true ]]; then
   autoload -Uz compinit
   compinit
   # End of Docker CLI completions
-  export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+  if [[ -n "$HAS_BREW" ]]; then
+    export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+  fi
 
   # custom aliases
   alias flushdns='dscacheutil -flushcache'
